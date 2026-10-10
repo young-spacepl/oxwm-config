@@ -1,0 +1,15 @@
+#!/bin/bash
+
+status=$(playerctl --player=spotify status 2>/dev/null)
+track=$(playerctl --player=spotify metadata \
+    --format='{{ duration(position) }} / {{ duration(mpris:length) }} {{ artist }} - {{ title }}' \
+    2>/dev/null)
+
+if [ "$status" = "Playing" ]; then
+    echo "$track"
+elif [ "$status" = "Paused" ]; then
+    echo "$track (Paused)"
+else
+    echo "Nothing Playing"
+fi
+
